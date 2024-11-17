@@ -112,7 +112,7 @@ async def send_calories(message, state):
     await state.finish()
 
 
-@dp.message_handler(text='регистрация')
+@dp.message_handler(text='Регистрация')
 async def sing_up(message: types.Message):
     await RegistrationState.username.set()
     await message.reply("Введите имя пользователя (только латинский алфавит):")
