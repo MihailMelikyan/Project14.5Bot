@@ -8,7 +8,7 @@ from aiogram.dispatcher import FSMContext
 import crud_functions
 from crud_functions import *
 
-api = "7701233404:AAFMRvBKUoY2KKK1m3KGz7PoJeuVZR3P6yE"
+api = ""
 
 initiate_db()
 bot = Bot(token=api)
