@@ -28,14 +28,18 @@ def initiate_db():
 products_data = [
     ('1', 'Product 1', 'Солгар натуральный растительный комплекс', '2139р'),
     ('2', 'Product 2', 'Солгар комплекс мультивитаминов', '2596р'),
-    ('3', 'Product 3', 'Солгар витамин C 500 mg', '1145 р'),
+    ('3', 'Product 3', 'Солгар витамин C 500 mg', '1145р'),
     ('4', 'Product 4', 'Солгар MULTI-ONE', '1888р')
 ]
-
-
+initiate_db()
 # curs.executemany('INSERT INTO Products VALUES(?,?,?,?)', products_data)
-def add_user(username, email, age):
-    curs.execute('INSERT INTO Users VALUES(?,?,?)', (username, email, age))
+
+
+def add_user(username, email, age, balance=1000):
+    curs.execute('INSERT INTO Users(username,email,age,balance) VALUES(?,?,?,?)',
+                 (username, email, age, balance))
+    connect.commit()
+
 
 def is_included(username):
     curs.execute("SELECT * FROM Users")
@@ -46,6 +50,7 @@ def is_included(username):
             return True
         else:
             return False
+
 
 def get_all_products():
     curs.execute("SELECT * FROM Products")

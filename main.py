@@ -8,7 +8,7 @@ from aiogram.dispatcher import FSMContext
 import crud_functions
 from crud_functions import *
 
-api = ""
+api = "7701233404:AAFMRvBKUoY2KKK1m3KGz7PoJeuVZR3P6yE"
 
 initiate_db()
 bot = Bot(token=api)
@@ -112,7 +112,7 @@ async def send_calories(message, state):
     await state.finish()
 
 
-@dp.message_handler(commands ='регистрация')
+@dp.message_handler(text='регистрация')
 async def sing_up(message: types.Message):
     await RegistrationState.username.set()
     await message.reply("Введите имя пользователя (только латинский алфавит):")
@@ -120,11 +120,15 @@ async def sing_up(message: types.Message):
 
 @dp.message_handler(state=RegistrationState.username)
 async def set_username(message: types.Message, state: FSMContext):
+    if is_included(message.text):
+        await message.reply("Этот пользователь уже зарегистрирован. Попробуйте другой username.")
+        await state.finish()
+        return
+
     async with state.proxy() as data:
         data['username'] = message.text
-        await RegistrationState.next()
-        await message.reply('Введите свой email :')
-
+    await RegistrationState.next()
+    await message.reply('Введите свой email :')
 
 @dp.message_handler(state=RegistrationState.email)
 async def set_email(message: types.Message, state: FSMContext):
